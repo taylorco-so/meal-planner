@@ -1,0 +1,15 @@
+{
+  "name": "3-Month Budget Meal Planner",
+  "short_name": "Meal Planner",
+  "description": "A 13-week rotating meal plan with recipes, auto-built grocery lists, and a budget tracker.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fffef9",
+  "theme_color": "#12a37f",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
