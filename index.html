@@ -1,0 +1,304 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>3-Month Meal Planner</title>
+<meta name="theme-color" content="#12a37f">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Meal Planner">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Nunito+Sans:wght@400;600;700;800&display=swap">
+<style>
+  :root {
+    --ink: #1e2b25; --soft: #5c7267; --line: #d8ecdf; --line-strong: #b9d9c7;
+    --teal: #12a37f; --teal-tint: #e2f9ef; --teal-deep: #0a7d63;
+    --plum: #db4b83; --plum-tint: #fdeaf2;
+    --amber: #ef9c1f; --amber-tint: #fef2dc;
+    --warn: #e2582f; --warn-tint: #fdece4;
+    --paper: #fffef9; --card: #ffffff;
+    --shadow: 0 1px 2px rgba(30,43,37,0.05), 0 4px 18px rgba(18,163,127,0.09);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #edf5ef; --soft: #a9c2b3; --line: #274038; --line-strong: #35534a;
+      --teal: #3fe0b3; --teal-tint: #123129; --teal-deep: #8ff2d4;
+      --plum: #ff8fb8; --plum-tint: #3a1c2a;
+      --amber: #ffc857; --amber-tint: #3a2a10;
+      --warn: #ff8f66; --warn-tint: #3a2115;
+      --paper: #0f1a15; --card: #16241d;
+      --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 26px rgba(0,0,0,0.4);
+    }
+  }
+  :root[data-theme="dark"] {
+    --ink: #edf5ef; --soft: #a9c2b3; --line: #274038; --line-strong: #35534a;
+    --teal: #3fe0b3; --teal-tint: #123129; --teal-deep: #8ff2d4;
+    --plum: #ff8fb8; --plum-tint: #3a1c2a;
+    --amber: #ffc857; --amber-tint: #3a2a10;
+    --warn: #ff8f66; --warn-tint: #3a2115;
+    --paper: #0f1a15; --card: #16241d;
+    --shadow: 0 1px 2px rgba(0,0,0,0.35), 0 8px 26px rgba(0,0,0,0.4);
+  }
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { background: var(--paper); height: 100%; }
+  body { color: var(--ink); font-family: "Nunito Sans", -apple-system, sans-serif; margin: 0; padding: 0 16px; }
+  .wrap { max-width: 760px; margin: 0 auto; padding-block: 18px 90px; }
+  h1 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 24px; margin: 2px 0 2px; text-wrap: balance; }
+  .eyebrow { display:flex; align-items:center; gap:8px; font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); font-weight: 800; }
+  .eyebrow img { width:20px; height:20px; border-radius:5px; }
+  .sub { color: var(--soft); font-size: 13px; margin: 4px 0 14px; }
+
+  .topbar { position: sticky; top: env(safe-area-inset-top, 0px); background: var(--paper); padding-top: 6px; z-index: 10; margin: 0 -16px; padding-left:16px; padding-right:16px; border-bottom: 1px solid var(--line); }
+  .weeknav { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 8px 10px; margin: 10px 0 10px; box-shadow: var(--shadow); }
+  .weeknav button.arrow { width: 32px; height: 32px; border-radius: 8px; border: 1px solid var(--line); background: var(--teal-tint); color: var(--teal-deep); font-size: 16px; font-weight: 800; cursor: pointer; flex-shrink:0; }
+  .weeknav button.arrow:disabled { opacity: .35; cursor: default; }
+  .weeknav .wk-info { flex: 1; text-align: center; }
+  .weeknav .wk-title { font-weight: 800; font-size: 13.5px; }
+  .weeknav .wk-dates { font-size: 11px; color: var(--soft); }
+  .weeknav select#weekJump { flex-shrink:0; border: 1px solid var(--line); border-radius: 8px; background: var(--teal-tint); color: var(--teal-deep); font-family: "Nunito Sans"; font-weight: 700; font-size: 11.5px; padding: 6px 4px; }
+  .tabbar { display: flex; gap: 4px; margin: 2px 0 8px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tabbar::-webkit-scrollbar { display: none; }
+  .tabbtn { flex: 1; min-width: 60px; border: none; background: transparent; color: var(--soft); font-family: "Nunito Sans"; font-weight: 800; font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; padding: 8px 6px; border-radius: 9px; cursor: pointer; white-space: nowrap; transition: background .15s ease, color .15s ease; }
+  .tabbtn.active { color: var(--teal-deep); background: var(--teal-tint); }
+
+  .tabpages-viewport { overflow: hidden; touch-action: pan-y; }
+  .tabpages-track { display: flex; will-change: transform; }
+  .tabpage { flex: 0 0 100%; min-width: 100%; box-sizing: border-box; }
+
+  .season-strip { display:flex; gap:10px; margin: 4px 0 4px; }
+  .season-stat { flex:1; background: var(--plum-tint); border-radius:10px; padding:8px 10px; }
+  .season-stat .n { font-weight:800; font-size:15px; font-variant-numeric: tabular-nums; color: var(--plum); }
+  .season-stat .l { font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); }
+
+  section.block { margin-bottom: 28px; scroll-margin-top: 96px; }
+  section.block > h2 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 20px; margin: 0 0 3px; border-bottom: 2px solid var(--teal); padding-bottom: 8px; }
+  section.block > .blk-sub { color: var(--soft); font-size: 12.5px; margin: 8px 0 14px; }
+
+  .progress-line { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--soft); margin-bottom: 14px; }
+  .progress-bar { flex: 1; height: 7px; border-radius: 4px; background: var(--line); overflow: hidden; }
+  .progress-bar > i { display: block; height: 100%; background: var(--teal); border-radius: 4px; transition: width .25s ease; }
+
+  .nutri-strip { display:flex; gap:10px; margin: 0 0 14px; flex-wrap: wrap; }
+  .nutri-stat { flex: 1; min-width: 72px; background: var(--amber-tint); border-radius:10px; padding:8px 10px; }
+  .nutri-stat .n { font-weight:800; font-size:14px; font-variant-numeric: tabular-nums; color: var(--amber); }
+  .nutri-stat .l { font-size:9.5px; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); }
+
+  .day-card { border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; background: var(--card); }
+  .day-card .dname { font-weight: 800; color: var(--teal-deep); font-size: 12.5px; text-transform: uppercase; letter-spacing: .04em; margin-bottom: 6px; display: flex; justify-content:space-between; align-items:baseline; gap:6px; }
+  .day-card .dname .ddate { color: var(--soft); font-weight:700; }
+  .day-card .dname .dcal { color: var(--amber); font-weight:800; font-size:11px; font-variant-numeric: tabular-nums; margin-right:auto; }
+  .meal-row { display: grid; grid-template-columns: 18px 66px 1fr; align-items: center; gap: 6px; padding: 3px 0; font-size: 13px; }
+  .meal-row .mtype { color: var(--soft); font-size: 9.5px; text-transform: uppercase; letter-spacing: .02em; white-space: nowrap; }
+  .meal-row.done span.mname { text-decoration: line-through; color: var(--soft); }
+  input[type="checkbox"] { width: 16px; height: 16px; accent-color: var(--teal); cursor: pointer; flex-shrink: 0; }
+
+  .recipe-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 620px) { .recipe-grid { grid-template-columns: 1fr; } }
+  .recipe { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--card); }
+  .recipe .rhead { padding: 10px 14px; display: flex; align-items: center; gap: 8px; font-weight: 700; font-size: 13px; background: var(--teal-tint); color: var(--teal-deep); }
+  .recipe .rhead .tag { font-size: 8.5px; font-weight: 800; text-transform: uppercase; letter-spacing: .05em; background: var(--plum); color: #fff; padding: 2px 7px; border-radius: 10px; flex-shrink: 0; }
+  .recipe .rbody { padding: 10px 14px 13px; font-size: 12.5px; }
+  .recipe .nutri { display:flex; gap:8px; flex-wrap:wrap; margin-bottom: 10px; }
+  .recipe .nutri span { font-size: 10.5px; font-weight: 800; background: var(--amber-tint); color: var(--amber); border-radius: 20px; padding: 3px 9px; font-variant-numeric: tabular-nums; }
+  .recipe .ilbl { font-size: 9.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--plum); font-weight: 800; margin-bottom: 3px; }
+  .recipe .ing { color: var(--ink); margin-bottom: 8px; }
+  .recipe ol { margin: 0; padding-left: 16px; color: var(--soft); }
+  .recipe ol li { margin-bottom: 2px; }
+  .subhead { font-size: 13.5px; font-weight: 800; color: var(--ink); margin: 16px 0 8px; }
+  .subhead:first-child { margin-top: 0; }
+
+  .grocery-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+  @media (max-width: 620px) { .grocery-cols { grid-template-columns: 1fr; } }
+  .cat-block { margin-bottom: 12px; }
+  .cat-title { background: var(--teal); color: #fff; font-weight: 800; font-size: 11px; text-transform: uppercase; letter-spacing: .04em; padding: 6px 10px; border-radius: 7px 7px 0 0; }
+  .glist { border: 1px solid var(--line); border-top: none; border-radius: 0 0 7px 7px; overflow: hidden; background: var(--card); }
+  .gitem { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border-top: 1px solid var(--line); font-size: 13px; }
+  .gitem:first-child { border-top: none; }
+  .gitem .iname { flex: 1; }
+  .gitem .iqty { font-size: 11px; font-weight: 800; color: var(--teal-deep); background: var(--teal-tint); border-radius: 20px; padding: 2px 9px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .gitem.checked .iname, .gitem.checked .iqty { text-decoration: line-through; color: var(--soft); }
+  .gitem.checked .iqty { background: transparent; }
+  .budget-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-top: 4px; }
+  .stat { background: var(--plum-tint); border-radius: 10px; padding: 10px 12px; }
+  .stat label { display: block; font-size: 9.5px; text-transform: uppercase; letter-spacing: .05em; color: var(--plum); font-weight: 800; margin-bottom: 6px; }
+  .stat input { width: 100%; border: none; background: transparent; border-bottom: 1.5px solid var(--plum); font-family: "Nunito Sans"; font-weight: 700; font-size: 14px; color: var(--ink); padding: 2px 0; }
+  .stat input:focus { outline: none; border-bottom-color: var(--teal); }
+  .stat.readout .val { font-weight: 800; font-size: 14px; font-variant-numeric: tabular-nums; }
+  .stat.readout .val.over { color: var(--warn); }
+  .stat.readout .val.under { color: var(--teal); }
+  .estimate-row { display:flex; align-items:center; gap:8px; margin: 10px 0 4px; font-size: 11.5px; color: var(--soft); flex-wrap:wrap; }
+  .estimate-row button { background: var(--teal-tint); color: var(--teal-deep); border: 1px solid var(--line-strong); border-radius: 20px; padding: 6px 12px; font-weight: 800; font-size: 11.5px; cursor: pointer; }
+
+  table.tracker { width: 100%; border-collapse: collapse; font-size: 12.5px; background: var(--card); }
+  table.tracker th { text-align: left; font-size: 9.5px; text-transform: uppercase; letter-spacing: .04em; color: var(--soft); padding: 7px 8px; border-bottom: 2px solid var(--line-strong); }
+  table.tracker td { padding: 9px 8px; border-bottom: 1px solid var(--line); }
+  table.tracker input { width: 100%; border: none; border-bottom: 1px solid var(--line); background: transparent; font-family: "Nunito Sans"; font-size: 12.5px; color: var(--ink); padding: 3px 2px; }
+  table.tracker input:focus { outline: none; border-bottom-color: var(--teal); }
+  table.tracker td.diff { font-weight: 800; font-variant-numeric: tabular-nums; }
+  table.tracker td.diff.over { color: var(--warn); }
+  table.tracker td.diff.under { color: var(--teal); }
+  tr.total td { background: var(--teal-tint); font-weight: 800; }
+
+  .settings-row { display:flex; align-items:center; gap:10px; font-size:12px; color:var(--soft); margin: 4px 0 16px; flex-wrap:wrap;}
+  .settings-row input[type="date"] { font-family:"Nunito Sans"; font-size:12.5px; border:1px solid var(--line); border-radius:7px; padding:5px 8px; background:var(--card); color:var(--ink); }
+  .settings-row .prefbtn { margin-left:auto; background: var(--plum-tint); color: var(--plum); border: 1px solid var(--line-strong); border-radius: 20px; padding: 6px 12px; font-weight: 800; font-size: 11px; cursor: pointer; font-family:"Nunito Sans"; }
+  .prefs-note { font-size: 11.5px; color: var(--soft); margin: -4px 0 14px; }
+  .prefs-note b { color: var(--plum); font-weight: 800; }
+
+  .onboard-overlay { display:none; position: fixed; inset: 0; z-index: 100; background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(3px); overflow-y: auto; padding: 24px 16px 40px; }
+  .onboard-overlay.show { display:block; }
+  .onboard-card { max-width: 620px; margin: 0 auto; background: var(--card); border: 1px solid var(--line); border-radius: 16px; padding: 22px 20px 20px; box-shadow: var(--shadow); }
+  .onboard-card h2 { font-family: "DM Serif Display", Georgia, serif; font-weight: 400; font-size: 22px; margin: 0 0 6px; }
+  .onboard-card .ob-sub { color: var(--soft); font-size: 13px; margin: 0 0 18px; line-height:1.5; }
+  .ob-catlabel { font-size: 10.5px; text-transform: uppercase; letter-spacing: .06em; font-weight: 800; color: var(--teal-deep); margin: 16px 0 8px; }
+  .ob-catlabel:first-of-type { margin-top: 0; }
+  .ob-chips { display:flex; flex-wrap:wrap; gap: 7px; }
+  .ob-chip { border: 1.5px solid var(--line-strong); background: var(--paper); color: var(--ink); border-radius: 20px; padding: 7px 13px; font-size: 12.5px; font-weight: 700; cursor: pointer; font-family:"Nunito Sans"; transition: all .1s ease; }
+  .ob-chip[data-state="like"] { background: var(--teal-tint); border-color: var(--teal); color: var(--teal-deep); }
+  .ob-chip[data-state="like"]::before { content: "✓ "; }
+  .ob-chip[data-state="dislike"] { background: var(--warn-tint); border-color: var(--warn); color: var(--warn); text-decoration: line-through; }
+  .ob-chip[data-state="dislike"]::before { content: "✕ "; }
+  .ob-actions { display:flex; gap:10px; margin-top: 22px; flex-wrap:wrap; }
+  .ob-actions button { flex:1; min-width:140px; border-radius: 12px; padding: 12px 16px; font-weight: 800; font-size: 13.5px; cursor: pointer; font-family:"Nunito Sans"; border: none; }
+  .ob-save { background: var(--teal); color: #fff; }
+  .ob-skip { background: var(--teal-tint); color: var(--teal-deep); border: 1px solid var(--line-strong) !important; }
+  .ob-legend { display:flex; gap:14px; font-size: 11px; color: var(--soft); margin: 4px 0 4px; flex-wrap:wrap; }
+
+  .savebar { position: fixed; left: 0; right: 0; bottom: env(safe-area-inset-bottom, 0px); display: flex; justify-content: center; pointer-events: none; }
+  .savebar .pill { background: var(--ink); color: var(--paper); font-size: 11.5px; font-weight: 700; padding: 7px 16px; border-radius: 20px; margin-bottom: 14px; opacity: 0; transform: translateY(6px); transition: opacity .2s, transform .2s; }
+  .savebar .pill.show { opacity: 0.92; transform: translateY(0); }
+
+  .install-banner { display:none; align-items:center; gap:10px; background: var(--teal-tint); border:1px solid var(--line); border-radius:10px; padding:9px 12px; margin: 0 0 14px; font-size:12px; color: var(--teal-deep); }
+  .install-banner.show { display:flex; }
+  .install-banner button { margin-left:auto; background: var(--teal); color:#fff; border:none; border-radius:7px; padding:6px 12px; font-weight:700; font-size:11.5px; cursor:pointer; }
+
+  .ov-week { border: 1px solid var(--line); border-radius: 10px; background: var(--card); margin-bottom: 8px; overflow: hidden; }
+  .ov-week summary { list-style: none; cursor: pointer; padding: 10px 12px; display: flex; align-items: center; gap: 8px; font-weight: 800; font-size: 12.5px; color: var(--teal-deep); }
+  .ov-week summary::-webkit-details-marker { display: none; }
+  .ov-week summary::before { content: "▸"; color: var(--teal); font-size: 10px; transition: transform .15s ease; flex-shrink:0; }
+  .ov-week[open] summary::before { transform: rotate(90deg); }
+  .ov-week summary .ov-dates { font-weight: 700; color: var(--soft); font-size: 11px; margin-left: auto; }
+  .ov-week summary .ov-cost { font-weight: 800; color: var(--plum); font-size: 11px; }
+  .ov-week .ov-viewbtn { border: 1px solid var(--line-strong); background: var(--teal-tint); color: var(--teal-deep); border-radius: 20px; padding: 5px 11px; font-weight: 800; font-size: 10.5px; cursor: pointer; margin: 0 12px 10px; }
+  .ov-days { padding: 0 12px 10px; }
+  .ov-day { display: grid; grid-template-columns: 78px 1fr; gap: 6px; padding: 4px 0; font-size: 12px; border-top: 1px solid var(--line); }
+  .ov-day:first-child { border-top: none; }
+  .ov-day .ov-dname { color: var(--soft); font-weight: 700; font-size: 10.5px; text-transform: uppercase; letter-spacing: .03em; padding-top: 1px; }
+  .ov-day .ov-meals { color: var(--ink); }
+  .ov-day .ov-meals b { color: var(--teal-deep); font-weight: 800; }
+</style>
+<div id="onboardOverlay" class="onboard-overlay">
+  <div class="onboard-card">
+    <h2>Welcome! Let's tailor your plan</h2>
+    <p class="ob-sub">Tap any food below to mark it as liked or disliked. Meals that use a disliked ingredient get swapped for another option automatically — the rest of the plan stays exactly as balanced as before. You can change this anytime.</p>
+    <div class="ob-legend"><span>Tap once: <b style="color:var(--teal-deep)">✓ like</b></span><span>Tap twice: <b style="color:var(--warn)">✕ dislike</b></span><span>Tap again: clear</span></div>
+    <div id="onboardChips"></div>
+    <div class="ob-actions">
+      <button type="button" class="ob-skip" id="obSkipBtn">Skip for now</button>
+      <button type="button" class="ob-save" id="obSaveBtn">Save &amp; start cooking</button>
+    </div>
+  </div>
+</div>
+<div class="wrap">
+  <div class="topbar">
+    <div class="eyebrow"><img src="icon-192.png" alt=""> Budget-Friendly Kitchen</div>
+    <h1>3-Month Meal Planner</h1>
+    <div class="weeknav">
+      <button class="arrow" id="prevWeek">‹</button>
+      <div class="wk-info"><div class="wk-title" id="wkTitle">Week 1 of 13</div><div class="wk-dates" id="wkDates"></div></div>
+      <button class="arrow" id="nextWeek">›</button>
+      <select id="weekJump" aria-label="Jump to week"></select>
+    </div>
+    <div class="tabbar" id="tabBar">
+      <button type="button" class="tabbtn" data-tab="plan">This Week</button>
+      <button type="button" class="tabbtn" data-tab="recipes">Recipes</button>
+      <button type="button" class="tabbtn" data-tab="groceries">Groceries</button>
+      <button type="button" class="tabbtn" data-tab="budget">Budget</button>
+      <button type="button" class="tabbtn" data-tab="overview">Full View</button>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding:0;">
+  <div id="installBanner" class="install-banner"><span>Add this to your home screen to use it like an app.</span><button id="installBtn">Install</button></div>
+
+  <div class="season-strip">
+    <div class="season-stat"><div class="n" id="seasonDays">0 / 91</div><div class="l">Days cooked</div></div>
+    <div class="season-stat"><div class="n" id="seasonSpent">$0</div><div class="l">Spent so far</div></div>
+    <div class="season-stat"><div class="n" id="seasonAvg">—</div><div class="l">Avg / week</div></div>
+  </div>
+
+  <div class="settings-row">Plan starts <input type="date" id="startDateInput"><button type="button" class="prefbtn" id="editPrefsBtn">Food preferences</button></div>
+  <p class="prefs-note" id="prefsNote" hidden></p>
+
+  <div class="tabpages-viewport" id="tabPagesViewport">
+    <div class="tabpages-track" id="tabPagesTrack">
+      <div class="tabpage" data-tab="plan">
+        <section class="block" id="sec-plan">
+          <h2>This Week's Plan</h2>
+          <div class="progress-line"><span id="mealProgressLabel">0 / 21 meals cooked</span><div class="progress-bar"><i id="mealProgressBar" style="width:0%"></i></div></div>
+          <div class="nutri-strip">
+            <div class="nutri-stat"><div class="n" id="nutriCal">—</div><div class="l">Avg Cal / day</div></div>
+            <div class="nutri-stat"><div class="n" id="nutriProtein">—</div><div class="l">Avg protein / day</div></div>
+            <div class="nutri-stat"><div class="n" id="nutriCarbFat">—</div><div class="l">Avg carbs · fat / day</div></div>
+          </div>
+          <p class="blk-sub" style="margin-top:-6px;">Estimates from this week's 3 daily meals (snacks not included) — the pool of recipes is designed to stay within a similar range every week.</p>
+          <div id="dayList"></div>
+        </section>
+      </div>
+
+      <div class="tabpage" data-tab="recipes">
+        <section class="block" id="sec-recipes">
+          <h2>This Week's Recipes</h2>
+          <p class="blk-sub">Full ingredients and steps for everything on this week's plan.</p>
+          <div id="recipesWeek"></div>
+        </section>
+      </div>
+
+      <div class="tabpage" data-tab="groceries">
+        <section class="block" id="sec-groceries">
+          <h2>Grocery List</h2>
+          <p class="blk-sub">Auto-built from this week's plan, consolidated by aisle.</p>
+          <div class="progress-line"><span id="groProgressLabel">0 / 0 checked</span><div class="progress-bar"><i id="groProgressBar" style="width:0%"></i></div></div>
+          <div class="grocery-cols" id="groceryList"></div>
+          <div class="estimate-row">
+            <span id="marketEstimateLabel">Market check: this week's groceries run about <strong id="marketEstimateVal">$0</strong></span>
+            <button id="useEstimateBtn" type="button">Use this estimate</button>
+          </div>
+          <div class="budget-strip">
+            <div class="stat"><label>Budgeted</label><input type="text" inputmode="decimal" id="gb-budgeted" placeholder="$0"></div>
+            <div class="stat"><label>Spent</label><input type="text" inputmode="decimal" id="gb-spent" placeholder="$0"></div>
+            <div class="stat readout"><label>Under / over</label><div class="val" id="gb-diff">—</div></div>
+          </div>
+        </section>
+      </div>
+
+      <div class="tabpage" data-tab="budget">
+        <section class="block" id="sec-budget">
+          <h2>Weekly Spending Tracker</h2>
+          <p class="blk-sub">A five-minute check-in to keep this week on budget.</p>
+          <table class="tracker">
+            <thead><tr><th>Category</th><th>Planned</th><th>Actual</th><th>Diff</th></tr></thead>
+            <tbody id="trackerBody"></tbody>
+          </table>
+        </section>
+      </div>
+
+      <div class="tabpage" data-tab="overview">
+        <section class="block" id="sec-overview">
+          <h2>Full 3-Month Overview</h2>
+          <p class="blk-sub">Every week of the 13-week rotation at a glance — tap a week to expand it, or jump straight to it.</p>
+          <div id="overviewList"></div>
+        </section>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<div class="savebar"><div class="pill" id="savePill">Saved</div></div>
+
+<script type="application/json" id="app-state">{"startDate":"2026-09-16","currentWeek":0,"cooked":{"2-d":false},"grocery":{},"weeks":[{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]},{"gbudgeted":"","gspent":"","tracker":[{"cat":"Groceries","planned":"","actual":""},{"cat":"Eating out","planned":"","actual":""},{"cat":"Household supplies","planned":"","actual":""},{"cat":"Other","planned":"","actual":""}]}],"onboarded":true,"prefsLiked":{},"prefsDisliked":{},"activeTab":"overview"}</script>
+<script src="data.js"></script>
+<script src="app.js"></script>
+
+</body></html>
